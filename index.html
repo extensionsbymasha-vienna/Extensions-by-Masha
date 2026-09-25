@@ -164,7 +164,7 @@ footer{min-height:110px;padding:28px 9vw;background:#332723;color:#d8c7be;displa
 <section id="gallery" class="gallery">
   <div class="kicker">GALERIE</div>
   <h2>Real Hair. <em>Real Results.</em></h2>
-  <div class="gallery-grid" id="gallery-grid"></div>
+  <div class="gallery-grid" id="galleryGrid"></div>
 </section>
 
 <section class="salon">
@@ -201,28 +201,31 @@ footer{min-height:110px;padding:28px 9vw;background:#332723;color:#d8c7be;displa
   <div class="footer-links"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a><span>♡</span></div>
 </footer>
 <script>
-// Galerie automatisch laden: galerie-1.jpg, galerie-2.jpg, ...
-(function () {
-  const gallery = document.getElementById('gallery-grid');
-  if (!gallery) return;
-  const maxImages = 100;
-  for (let i = 1; i <= maxImages; i++) {
-    const img = document.createElement('img');
-    img.src = `galerie-${i}.jpg`;
-    img.alt = `Haarverlängerung Ergebnis ${i}`;
-    img.loading = 'lazy';
-    img.onerror = () => img.remove();
-    gallery.appendChild(img);
-  }
-})();
-</script>
-<script>
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
     const target=document.querySelector(a.getAttribute('href'));
     if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth'});}
   });
 });
+
+const galleryGrid = document.getElementById('galleryGrid');
+
+// Automatische Galerie: Dateien galerie-1.jpg, galerie-2.jpg, ...
+// direkt neben index.html werden automatisch angezeigt.
+for (let i = 1; i <= 100; i++) {
+  const img = document.createElement('img');
+  img.src = `galerie-${i}.jpg`;
+  img.alt = 'Haarverlängerung – Extensions by Masha';
+  img.style.display = 'none';
+
+  img.onload = () => {
+    img.style.display = '';
+    img.classList.add('is-visible');
+  };
+
+  img.onerror = () => img.remove();
+  galleryGrid.appendChild(img);
+}
 
 const revealItems = document.querySelectorAll('.about, .services, .gallery, .salon, .contact, .gallery-grid img');
 const observer = new IntersectionObserver((entries)=>{
