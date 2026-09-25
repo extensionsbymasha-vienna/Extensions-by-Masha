@@ -164,16 +164,7 @@ footer{min-height:110px;padding:28px 9vw;background:#332723;color:#d8c7be;displa
 <section id="gallery" class="gallery">
   <div class="kicker">GALERIE</div>
   <h2>Real Hair. <em>Real Results.</em></h2>
-  <div class="gallery-grid">
-    <img src="images/galerie-1.jpg" alt="Dunkles, langes Haar">
-    <img src="images/galerie-2.jpg" alt="Kupferbraunes, langes Haar">
-    <img src="images/galerie-3.jpg" alt="Braunes Haar mit großen Wellen">
-    <img src="images/galerie-4.jpg" alt="Braunes Haar im Salon">
-      <img src="images/galerie-5.jpg" alt="Haarverlängerung">
-      <img src="images/galerie-6.jpg" alt="Haarverlängerung">
-      <img src="images/galerie-7.jpg" alt="Haarverlängerung">
-      <img src="images/galerie-8.jpg" alt="Haarverlängerung">
-  </div>
+  <div class="gallery-grid" id="gallery-grid"></div>
 </section>
 
 <section class="salon">
@@ -209,6 +200,22 @@ footer{min-height:110px;padding:28px 9vw;background:#332723;color:#d8c7be;displa
   <div class="footer-social">♪ @extensions.by.masha &nbsp;&nbsp;&nbsp; ◎</div>
   <div class="footer-links"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a><span>♡</span></div>
 </footer>
+<script>
+// Galerie automatisch laden: galerie-1.jpg, galerie-2.jpg, ...
+(function () {
+  const gallery = document.getElementById('gallery-grid');
+  if (!gallery) return;
+  const maxImages = 100;
+  for (let i = 1; i <= maxImages; i++) {
+    const img = document.createElement('img');
+    img.src = `galerie-${i}.jpg`;
+    img.alt = `Haarverlängerung Ergebnis ${i}`;
+    img.loading = 'lazy';
+    img.onerror = () => img.remove();
+    gallery.appendChild(img);
+  }
+})();
+</script>
 <script>
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
